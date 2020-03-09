@@ -32,7 +32,8 @@ export default class AssetDetail extends React.Component {
 
             deletingSelectionId: null,
             showDeleteDialog: false,
-            showDeletedDialog: false
+            showDeletedDialog: false,
+            showCreatedDialog: false
         };
 
         this.playerRef = null;
@@ -46,6 +47,7 @@ export default class AssetDetail extends React.Component {
         this.showDeleteDialog = this.showDeleteDialog.bind(this);
         this.hideDeleteDialog = this.hideDeleteDialog.bind(this);
         this.hideDeletedDialog = this.hideDeletedDialog.bind(this);
+        this.hideCreatedDialog = this.hideCreatedDialog.bind(this);
     }
 
     onCreateSelection(e) {
@@ -67,7 +69,7 @@ export default class AssetDetail extends React.Component {
                 end: 99
             }
         }).then(function() {
-            console.log('selection created');
+            me.setState({showCreatedDialog: true});
 
             // Refresh the selections.
             getAsset(me.asset.asset.id).then(function(d) {
@@ -137,6 +139,10 @@ export default class AssetDetail extends React.Component {
 
     hideDeletedDialog() {
         this.setState({showDeletedDialog: false});
+    }
+
+    hideCreatedDialog() {
+        this.setState({showCreatedDialog: false});
     }
 
     render() {
@@ -307,8 +313,10 @@ export default class AssetDetail extends React.Component {
                                                     </table>
                                                 )}
                                                 <div className="form-group">
-                                                    <label htmlFor="newSelectionTitle">Selection Title</label>
-                                                    <input type="text" className="form-control" id="newSelectionTitle" />
+                                                    <label htmlFor="newSelectionTitle">
+                                                        Selection Title
+                                                    </label>
+                                                    <input type="text" className="form-control" id="newSelectionTitle" required />
                                                 </div>
                                                 <div className="form-group">
                                                     <label
@@ -361,10 +369,17 @@ export default class AssetDetail extends React.Component {
         return (
             <div className="container">
                 <Alert
+                    variant="success" show={this.state.showCreatedDialog}
+                    onClose={this.hideCreatedDialog} dismissible>
+                    <Alert.Heading>Selection created.</Alert.Heading>
+                </Alert>
+
+                <Alert
                     variant="danger" show={this.state.showDeletedDialog}
                     onClose={this.hideDeletedDialog} dismissible>
                     <Alert.Heading>Selection deleted.</Alert.Heading>
                 </Alert>
+
                 <button
                     onClick={this.props.toggleAssetView}
                     className="btn btn-secondary btn-sm mt-2">
