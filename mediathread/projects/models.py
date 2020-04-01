@@ -3,7 +3,7 @@ from datetime import datetime
 from courseaffils.models import Course
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.db.models import Q
 from django.utils.encoding import python_2_unicode_compatible
@@ -295,11 +295,12 @@ class Project(models.Model):
     title = models.CharField(max_length=1024)
     summary = models.TextField(null=True, blank=True)
 
-    course = models.ForeignKey(Course, related_name='project_set')
+    course = models.ForeignKey(
+        Course, related_name='project_set', on_delete=models.CASCADE)
 
     # this is actually the LAST UPDATER for version-control purposes
     # (and wow does that make a mess of things!)
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     participants = models.ManyToManyField(User,
                                           blank=True,
@@ -655,20 +656,20 @@ reversion.register(Project)
 
 
 class AssignmentItem(models.Model):
-    asset = models.ForeignKey(Asset)
-    project = models.ForeignKey(Project)
+    asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
 
 class ProjectNote(models.Model):
-    annotation = models.ForeignKey(SherdNote)
-    project = models.ForeignKey(Project)
+    annotation = models.ForeignKey(SherdNote, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
 
 class ProjectSequenceAsset(models.Model):
     """This model connects the SequenceAsset to the Project."""
-    sequence_asset = models.ForeignKey(SequenceAsset)
+    sequence_asset = models.ForeignKey(SequenceAsset, on_delete=models.CASCADE)
     # Points to an "Assignment" Project.
-    project = models.ForeignKey(Project)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('sequence_asset', 'project')

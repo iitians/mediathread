@@ -5,7 +5,7 @@ from urlparse import urlparse
 
 from django.conf import settings
 from django.core import management
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.test import client
 from lettuce import before, after, world, step
 from lettuce import django

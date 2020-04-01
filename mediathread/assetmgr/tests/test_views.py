@@ -8,7 +8,7 @@ from json import loads
 import json
 
 from django.core.cache import cache
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http.response import Http404, HttpResponseRedirect
 from django.test import TestCase
 from django.test.client import RequestFactory

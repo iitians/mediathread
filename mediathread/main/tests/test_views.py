@@ -16,7 +16,7 @@ from django.contrib.auth.models import User, AnonymousUser, Group
 from django.contrib.contenttypes.models import ContentType
 from django.core import mail
 from django.core.cache import cache
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http.response import Http404
 from django.test import TestCase, override_settings
 from django.test.client import RequestFactory
