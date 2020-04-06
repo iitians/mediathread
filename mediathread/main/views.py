@@ -141,7 +141,6 @@ class CourseDetailView(LoggedInMixin, DetailView):
         course = get_object_or_404(Course, pk=course_pk)
         request.course = course
         self.course = course
-        request.session[SESSION_KEY] = course
 
         return super(CourseDetailView, self).dispatch(request, *args, **kwargs)
 
@@ -694,7 +693,7 @@ class CourseDemoteUserView(LoggedInFacultyMixin, View):
         messages.add_message(request, messages.INFO, msg)
 
         return HttpResponseRedirect(
-                reverse('course-roster', args=[request.course.pk]))
+            reverse('course-roster', args=[request.course.pk]))
 
 
 class CourseRemoveUserView(LoggedInFacultyMixin, View):
@@ -937,7 +936,8 @@ class CoursePanoptoSourceView(LoggedInFacultyMixin, TemplateView):
         folder_id = self.request.POST.get('folder_name', '')
         ingester.ingest_sessions(request.course, folder_id)
 
-        return HttpResponseRedirect(reverse('course-panopto-source'))
+        return HttpResponseRedirect(
+            reverse('course-panopto-source', args=[request.course.pk]))
 
 
 class InstructorDashboardSettingsView(

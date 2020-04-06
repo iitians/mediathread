@@ -2,7 +2,6 @@ from datetime import datetime
 import json
 from random import choice
 from string import ascii_letters
-import waffle
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -24,20 +23,23 @@ from mediathread.assetmgr.api import AssetResource
 from mediathread.discussions.utils import pretty_date
 from mediathread.djangosherd.api import SherdNoteResource
 from mediathread.djangosherd.models import DiscussionIndex
-from mediathread.mixins import faculty_only, LoggedInCourseMixin, \
-    LoggedInFacultyMixin
+from mediathread.mixins import (
+    faculty_only, LoggedInCourseMixin, LoggedInFacultyMixin
+)
 from mediathread.taxonomy.api import VocabularyResource
 from mediathread.taxonomy.models import Vocabulary
+from mediathread.util import attach_course_to_request
 from structuredcollaboration.models import Collaboration
 
 
 @allow_http("POST")
 @faculty_only
-def discussion_create(request):
+def discussion_create(request, *args, **kwargs):
 
     """Start a discussion of an arbitrary model instance."""
     title = request.POST['comment_html']
     comment = request.POST.get('comment', '')
+    request = attach_course_to_request(request, **kwargs)
 
     # Find the object we're discussing.
     the_content_type = ContentType.objects.get(

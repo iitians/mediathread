@@ -11,8 +11,6 @@ from django.utils.encoding import smart_text
 from tastypie import fields
 from tastypie.resources import ModelResource
 
-import waffle
-
 from mediathread.api import UserResource, ClassLevelAuthentication
 from mediathread.assetmgr.api import AssetResource
 from mediathread.djangosherd.api import SherdNoteResource

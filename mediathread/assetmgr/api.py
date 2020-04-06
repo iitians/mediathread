@@ -1,5 +1,4 @@
 # pylint: disable-msg=R0904
-import waffle
 import json
 import time
 from django.urls import reverse

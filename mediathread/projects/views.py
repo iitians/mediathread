@@ -1,6 +1,5 @@
 from datetime import datetime
 import json
-import waffle
 
 from courseaffils.lib import get_public_name
 from django.contrib import messages
@@ -274,6 +273,7 @@ class ProjectPublicView(View):
 
         project_id = int(collab.object_pk)
         project = Project.objects.get(id=project_id)
+        request.course = project.course
         parent = project.assignment()
         if (project.is_selection_assignment() or
                 (parent and parent.is_selection_assignment())):

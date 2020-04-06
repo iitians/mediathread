@@ -214,8 +214,11 @@ class ProjectViewTest(MediathreadTestMixin, TestCase):
 
         response = self.client.post('/project/create/', data, follow=True)
         self.assertEquals(response.status_code, 200)
-        self.assertTrue(response.redirect_chain[0][0].startswith(
-            '/project/view/'))
+        self.assertTrue(
+            response.redirect_chain[0][0].startswith(
+                '/course/{}/project/view/'.format(self.sample_course.pk)
+            )
+        )
 
         project = Project.objects.get(course=self.sample_course,
                                       title='Untitled')

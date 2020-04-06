@@ -197,6 +197,37 @@ urlpatterns = [
         'path': 'crossdomain.xml'
     }),
 
+    # Discussion
+    url(r'^discussion/', include('mediathread.discussions.urls')),
+
+    # External Collections
+    url(r'^explore/redirect/(?P<collection_id>\d+)/$',
+        RedirectToExternalCollectionView.as_view(),
+        name='collection_redirect'),
+
+    # Uploader
+    url(r'^upload/redirect/(?P<collection_id>\d+)/$',
+        RedirectToUploaderView.as_view(),
+        name='uploader_redirect'),
+
+    url(r'^impersonate/', include('impersonate.urls')),
+
+    url(r'^jsi18n', django.views.i18n.javascript_catalog),
+
+    url(r'^media/(?P<path>.*)$', django.views.static.serve,
+        {'document_root':
+         os.path.abspath(
+             os.path.join(os.path.dirname(admin.__file__), 'media')),
+         'show_indexes': True}),
+
+    # Composition Space
+    url(r'^project/', include('mediathread.projects.urls')),
+
+    # Instructor Dashboard
+    url(r'^course/(?P<course_pk>\d+)/dashboard/settings/$',
+        InstructorDashboardSettingsView.as_view(),
+        name='course-settings-general'),
+
     url(r'^dashboard/migrate/materials/(?P<course_id>\d+)/$',
         MigrateMaterialsView.as_view(), {}, 'dashboard-migrate-materials'),
     url(r'^course/(?P<course_pk>\d+)/dashboard/migrate/$',
@@ -232,37 +263,6 @@ urlpatterns = [
     url(r'^course/(?P<course_pk>\d+)/dashboard/panopto/',
         CoursePanoptoSourceView.as_view(),
         name='course-panopto-source'),
-
-    # Discussion
-    url(r'^discussion/', include('mediathread.discussions.urls')),
-
-    # External Collections
-    url(r'^explore/redirect/(?P<collection_id>\d+)/$',
-        RedirectToExternalCollectionView.as_view(),
-        name='collection_redirect'),
-
-    # Uploader
-    url(r'^upload/redirect/(?P<collection_id>\d+)/$',
-        RedirectToUploaderView.as_view(),
-        name='uploader_redirect'),
-
-    url(r'^impersonate/', include('impersonate.urls')),
-
-    url(r'^jsi18n', django.views.i18n.javascript_catalog),
-
-    url(r'^media/(?P<path>.*)$', django.views.static.serve,
-        {'document_root':
-         os.path.abspath(
-             os.path.join(os.path.dirname(admin.__file__), 'media')),
-         'show_indexes': True}),
-
-    # Composition Space
-    url(r'^project/', include('mediathread.projects.urls')),
-
-    # Instructor Dashboard
-    url(r'^course/(?P<course_pk>\d+)/dashboard/settings/$',
-        InstructorDashboardSettingsView.as_view(),
-        name='course-settings-general'),
 
     # Reporting
     url(r'^reports/', include('mediathread.reports.urls')),
