@@ -2,7 +2,7 @@
 A new base.html without the course context overwritten in the template.
 {% endcomment %}
 
-{% load user_projects coursetags compress static waffle_tags %}
+{% load user_projects coursetags compress static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -198,12 +198,6 @@ A new base.html without the course context overwritten in the template.
                 {% elif project %}
                 this.current_project = {{ project.pk }};
                 {% endif %}
-
-                {% flag "addressable_courses" %}
-                this.addressable_courses = true;
-                {% else %}
-                this.addressable_courses = false;
-                {% endflag %}
             })();
             </script>
 

@@ -99,8 +99,7 @@ def discussion_create(request):
         new_threaded_comment.user)
 
     if not request.is_ajax():
-        if waffle.flag_is_active(request, 'addressable_courses') and \
-           hasattr(request, 'course'):
+        if hasattr(request, 'course'):
             return HttpResponseRedirect(
                 reverse('discussion-view',
                         args=(request.course.pk, new_threaded_comment.id,)))

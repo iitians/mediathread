@@ -164,13 +164,8 @@
 
                         <div class="column-container">
                             <h2>Collection<div class="actions">{% include "help/help_button.html" %}</div></h2>
-                            {% flag "addressable_courses" %}
                             <a class="btn btn-default collection right"
                                href="{% url 'course_detail' course.pk %}asset/">
-                            {% else %}
-                            <a class="btn btn-default collection right"
-                               href="/asset/">
-                            {% endflag %}
                                 <img src="{% static 'img/viewfullcollection.png' %}"
                                      alt="view full collection icon" />
                                 View Full Collection

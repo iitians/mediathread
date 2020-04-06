@@ -57,10 +57,7 @@ class ProjectResource(ModelResource):
         bundle.data['is_response'] = bundle.obj.assignment() is not None
         bundle.data['attribution'] = bundle.obj.attribution()
 
-        if hasattr(self, 'request') and \
-           waffle.flag_is_active(self.request, 'addressable_courses') and \
-           hasattr(self.request, 'course'):
-
+        if hasattr(self, 'request') and hasattr(self.request, 'course'):
             bundle.data['url'] = reverse('project-workspace', kwargs={
                 'course_pk': self.request.course.pk,
                 'project_id': bundle.obj.pk,

@@ -1,4 +1,4 @@
-{% load cache user_projects coursetags compress static bootstrap3 waffle_tags %}
+{% load cache user_projects coursetags compress static bootstrap3 %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -175,11 +175,7 @@
                 <div id="course_information">
                     <h1 id="course_title">
                     {% block coursetitle %}
-                        {% flag "addressable_courses" %}
                         <a href="{% url 'course_detail' course.pk %}" id="course_title_link">{{course.title}}</a>
-                        {% else %}
-                        <a href="/" id="course_title_link">{{course.title}}</a>
-                        {% endflag %}
                     {% endblock %}
                     </h1>
                     <div class="clear: right;"></div>
@@ -286,12 +282,6 @@
             {% elif project %}
             this.current_project = {{ project.pk }};
             {% endif %}
-
-            {% flag "addressable_courses" %}
-            this.addressable_courses = true;
-            {% else %}
-            this.addressable_courses = false;
-            {% endflag %}
         })();
     </script>
 

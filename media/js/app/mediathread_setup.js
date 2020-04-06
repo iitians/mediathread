@@ -220,7 +220,6 @@
         },
         getCourseId: function() {
             return MediaThread.current_course;
-        },
-        addressableCourses: MediaThread.addressable_courses
+        }
     };
 })();
