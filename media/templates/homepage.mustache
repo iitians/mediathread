@@ -157,7 +157,7 @@
                                     {{^is_faculty}}
                                         <div class="clearfix"></div>
                                         <br />
-                                        <form action="/project/create/" method="post">
+                                        <form action="/course/{{course.id}}/project/create/" method="post">
                                             <input type="hidden" name="parent" value="{{id}}" />
                                             <input type="hidden" name="project_type" value="composition" />
                                             <input type="hidden" name="title" value="My Response" />

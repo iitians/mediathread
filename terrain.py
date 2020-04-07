@@ -226,10 +226,10 @@ def i_am_username_in_course(step, username, coursename):
 
         wait.until(lambda driver: world.browser.find_element_by_id("loaded"))
 
-        course_title = world.browser.find_element_by_id("course_title_link")
+        course_title = world.browser.find_element_by_id("course_title")
         msg = ("Expected the %s class, but found the %s class" %
                (coursename, course_title.text))
-        assert course_title.text.find(coursename) > -1, msg
+        assert course_title.text.lower().find(coursename.lower()) > -1, msg
 
         assert username in world.browser.page_source, world.browser.page_source
     else:
@@ -354,10 +354,10 @@ def i_scroll_to_the_link(step, text):
 @step(u'I am in the ([^"]*) class')
 def i_am_in_the_coursename_class(step, coursename):
     if world.using_selenium:
-        course_title = world.browser.find_element_by_id("course_title_link")
+        course_title = world.browser.find_element_by_id("course_title")
         msg = ("Expected the %s class, but found the %s class" %
                (coursename, course_title.text))
-        assert course_title.text.find(coursename) > -1, msg
+        assert course_title.text.lower().find(coursename.lower()) > -1, msg
 
 
 @step(u'there is an? ([^"]*) button')
@@ -620,7 +620,8 @@ def given_publish_to_world_is_value(step, value):
         wait = ui.WebDriverWait(world.browser, 5)
         wait.until(visibility_of_element_located((By.ID, 'pagebody')))
 
-        world.browser.get(django.django_url('/'))
+        world.browser.get(django.django_url(
+            '/course/{}/'.format(world.mixin.sample_course.pk)))
 
 
 @step(u'Then publish to world is ([^"]*)')
@@ -925,7 +926,8 @@ def given_the_selection_visibility_is_value(step, value):
         wait = ui.WebDriverWait(world.browser, 5)
         wait.until(visibility_of_element_located((By.ID, 'pagebody')))
 
-        world.browser.get(django.django_url('/'))
+        world.browser.get(django.django_url(
+            '/course/{}/'.format(world.mixin.sample_course.pk)))
 
 
 @step(u'Given the item visibility is set to "([^"]*)"')
@@ -950,7 +952,8 @@ def given_the_item_visibility_is_value(step, value):
         wait = ui.WebDriverWait(world.browser, 5)
         wait.until(visibility_of_element_located((By.ID, 'pagebody')))
 
-        world.browser.get(django.django_url('/'))
+        world.browser.get(django.django_url(
+            '/course/{}/'.format(world.mixin.sample_course.pk)))
 
 
 def get_selector_from_ftype(ftype):
@@ -1116,7 +1119,10 @@ def get_column(title):
 def when_i_view_the_title_asset(step, title):
     from mediathread.assetmgr.models import Asset
     item = Asset.objects.filter(title=title).first()
-    url = reverse('asset-view', kwargs={'asset_id': item.id})
+    url = reverse('asset-view', kwargs={
+        'asset_id': item.id,
+        'course_pk': world.mixin.sample_course.pk,
+    })
     world.browser.get(django.django_url(url))
 
 

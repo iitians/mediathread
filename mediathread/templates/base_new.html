@@ -89,7 +89,7 @@ A new base.html without the course context overwritten in the template.
             <div class="container-fluid">
                 {% block courseinformation %}
                     {% if not read_only_view %}
-                        <h6 class="course-title">
+                        <h6 id="course_title" class="course-title">
                             {% block coursetitle %}
                                 {{course.title}}
                             {% endblock %}

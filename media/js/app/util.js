@@ -1,7 +1,7 @@
 /* global MediaThread: true */
 /* exported _propertyCount, getVisibleContentHeight */
 /* exported switcher, toggleHelp, toggleHelpOverlay, storeData */
-/* exported retrieveData, showMessage, confirmAction */
+/* exported retrieveData, showMessage, confirmAction, urlWithCourse */
 // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
 
 // eslint-disable-next-line no-unused-vars
@@ -181,4 +181,23 @@ function showMessage(msg, onclose, customTitle, position) {
     if (position) {
         $dialogConfirm.dialog('widget').position(position);
     }
+}
+
+/**
+ * Append course ID as a GET param to the url, if necessary.
+ */
+// eslint-disable-next-line no-unused-vars
+function urlWithCourse(url, courseId) {
+    if (!courseId) {
+        courseId = MediaThread.current_course;
+    }
+
+    if (!url.match(/(\?|&)course=\d+/)) {
+        if (url.match(/\?\w+=/)) {
+            return url + '&course=' + courseId;
+        } else {
+            return url + '?course=' + courseId;
+        }
+    }
+    return url;
 }

@@ -25,6 +25,8 @@ const getAssets = function(
 ) {
     const params = new URLSearchParams();
 
+    params.append('course', window.MediaThread.current_course);
+
     // Pagination
     params.append('limit', 20);
     params.append('offset', offset);
@@ -74,10 +76,14 @@ const getAssets = function(
  * Get annotation metadata.
  */
 const getAsset = function(id=null) {
-    let url = '/asset/';
+    const courseId = window.MediaThread.current_course;
+
+    let url = `/asset/?course=${courseId}`;
+
     if (id) {
-        url = `/api/asset/${id}/?annotations=true`;
+        url = `/api/asset/${id}/?annotations=true&course=${courseId}`;
     }
+
     return authedFetch(url)
         .then(function(response) {
             if (response.status === 200) {

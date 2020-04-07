@@ -1,4 +1,4 @@
-{% extends "base_new.html" %}
+{% extends "base.html" %}
 {% load tagging_tags user_projects helpful_tags coursetags comments %}
 {% load static %}
 {% load waffle_tags %}
@@ -165,7 +165,7 @@
                         <div class="column-container">
                             <h2>Collection<div class="actions">{% include "help/help_button.html" %}</div></h2>
                             <a class="btn btn-default collection right"
-                               href="{% url 'course_detail' course.pk %}asset/">
+                               href="{% url 'asset-collection-view' course.pk %}">
                                 <img src="{% static 'img/viewfullcollection.png' %}"
                                      alt="view full collection icon" />
                                 View Full Collection
