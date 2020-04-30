@@ -414,7 +414,7 @@ def i_confirm_the_action(step):
     dialog = world.browser.find_element_by_id("dialog-confirm").parent
     btns = dialog.find_elements_by_tag_name("button")
     for btn in btns:
-        if btn.text == "OK":
+        if btn.text.strip() == "OK":
             btn.click()
             wait = ui.WebDriverWait(world.browser, 5)
             wait.until(invisibility_of_element_located((By.ID,
